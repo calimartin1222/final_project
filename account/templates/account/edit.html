@@ -11,8 +11,9 @@ Edit Profile
     <form method='post'>
         <!--csrf token authentication-->
         {% csrf_token %}
-        <!--gets form from dictionary args passed from views.py-->
+        <!--gets form from edit_profile in views.py-->
         {{ form.as_p }}
+        <!--button used to submit profile edit form-->
         <button type="submit">Save Changes</button>
     </form>
 

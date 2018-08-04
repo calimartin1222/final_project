@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'account/style.css' %}" type="text/css" />
 {% endblock %}
 
 {% block title %}
@@ -13,8 +11,11 @@ Login
 
 <h1>Login</h1>
 <form method="post">
+  <!--csrf token authentication-->
   {% csrf_token %}
+  <!--gets form from login views.py-->
   {{ form.as_p }}
+  <!--button used to submit login form-->
   <button type="submit">Login</button>
 </form>
 
