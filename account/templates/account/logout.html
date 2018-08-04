@@ -6,16 +6,11 @@
 {% endblock %}
 
 {% block title %}
-Login
+Logout
 {% endblock %}
 
 {% block body %}
 
-<h1>Login</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">Login</button>
-</form>
+<h1>Logout</h1>
 
 {% endblock %}
