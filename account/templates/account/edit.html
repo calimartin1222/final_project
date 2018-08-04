@@ -5,10 +5,13 @@ Edit Profile
 {% endblock %}
 
 {% block body %}
+
     <h2>Edit Profile</h2>
 
     <form method='post'>
+        <!--csrf token authentication-->
         {% csrf_token %}
+        <!--gets form from dictionary args passed from views.py-->
         {{ form.as_p }}
         <button type="submit">Save Changes</button>
     </form>
