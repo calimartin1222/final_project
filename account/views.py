@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 from account.forms import registration_form, edit_profile_form
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserChangeForm
+from django.contrib.auth.decorators import login_required
 
+@login_required
 def account(request):
     #renders index.html in the accounts folder in the templates folder
     return render(request, "account/index.html")
@@ -32,6 +34,7 @@ def register(request):
         #folder, and passes the dictionary args as an argument
         return render(request, 'account/register.html', args)
 
+@login_required
 def view_profile(request):
     #creates a dictionary to be passed with user information
     args = {
@@ -41,6 +44,7 @@ def view_profile(request):
     #folder, and passes the dictionary args as an argument
     return render(request, 'account/profile.html', args)
 
+@login_required
 def edit_profile(request):
     #checks the way the user got to the page
     #if it was a POST method, execute the following code
