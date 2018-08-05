@@ -1,30 +1,50 @@
 from django.shortcuts import render
-from tools.forms import per_day_form
+from tools.forms import per_day_form, grade_recieved_form
+from datetime import datetime
 
 # Create your views here.
 def home(request):
     return render(request, 'tools/home.html')
 
 def per_day(request):
-    #checks the way the user got to the page
-    #if it was a POST method, execute the following code
-    if request.method == "POST":
-        #creates a new form object that is based off of a custom form called
-        #per_day_form from forms.py
-        form = per_day_form(request.POST, instance=request.user)
-        #checks if there's anything wrong with the user input (ex. SQL inserts)
+    if request.method == 'POST':
+        form = per_day_form(request.POST)
         if form.is_valid():
-            #saves the form with the entered information
-            form.save()
-            #redirects the user to the same page and shows results
-            return redirect('/per_day/', )
+            amt = int(form['amount'].value())
+            m = int(form['due_date_month'].value())
+            d = int(form['due_date_day'].value())
+            y = int(form['due_date_year'].value())
+
+            now = datetime.now()
+            due_date = datetime(now.year, m, d)
+            delta = due_date - now
+
+
+            per = amt/delta
+
+            result = f'You must do {per.days} per day to finish in time'
+
+            #f"{m}/{d}/{y}"
+
+            return render(request, 'tools/results.html', {'result': result})
     else:
-        #creates a new, blank per_day_form for the user ot fill out
-        form = per_day_form(instance=request.user)
-        #creates a dictionary to be passed with the form information
-        args = {
-            'form': form
-        }
-        #renders per_day.html in the accounts folder in the templates
-        #folder, and passes the dictionary args as an argument
-        return render(request, 'account/per_day.html', args)
+        form = per_day_form()
+        return render(request, 'tools/per_day.html', {'form': form})
+
+def grade_recieved(request):
+    if request.method == 'POST':
+        form = grade_recieved_form(request.POST)
+        if form.is_valid():
+            percent = int(form['grade'].value())
+            total = int(form['points_possible'].value())
+
+            grade = percent/100
+
+            missed = total - (grade * total)
+
+            result = f'You missed {missed} question(s)'
+
+            return render(request, 'tools/results.html', {'result': result})
+    else:
+        form = grade_recieved_form()
+        return render(request, 'tools/grade_recieved.html', {'form': form})

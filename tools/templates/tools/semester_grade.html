@@ -1,12 +1,11 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Per Day
+Semester Grade
 {% endblock %}
 
 {% block body %}
-    <h2>Per Day</h2>
-    <p>Enter Date in MM/DD/YY format</p>
+    <h2>Calculate Semester Grade</h2>
     <form method="post">
         <!--csrf token authentication-->
         {% csrf_token %}
