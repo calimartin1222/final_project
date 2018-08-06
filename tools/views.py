@@ -48,3 +48,30 @@ def grade_recieved(request):
     else:
         form = grade_recieved_form()
         return render(request, 'tools/grade_recieved.html', {'form': form})
+
+def semester_grade(request):
+    # if request.method == 'POST':
+    #     form = semester_grade_form(request.POST)
+    #     if form.is_valid():
+    #         percent = int(form['grade'].value())
+    #         total = int(form['points_possible'].value())
+
+    #         grade = percent/100
+
+    #         missed = total - (grade * total)
+
+    #         result = f'You missed {missed} question(s)'
+
+    #         return render(request, 'tools/results.html', {'result': result})
+    # else:
+        grade_letters = {
+        'A+' : 'A+',
+        'A' : 'A',
+        'B+' : 'B+',
+        'B' : 'B',
+        'C+' : 'C+',
+        'C' : 'C',
+        'D+' : 'D+',
+        'D' : 'D',
+        'F' : 'F'}
+        return render(request, 'tools/semester_grade.html', {'grade_letters':grade_letters})
