@@ -25,10 +25,24 @@
 
         document.getElementsByName('task').forEach(function(checkbox) {
             checkbox.onclick = function() {
+                // var crossed = this.parentElement.innerHTML.strike();
+                // this.checked = true;
+                // var button = document.createElement("button");
+                // button.setAttribute("type", "button");
+                // button.setAttribute("class", "btn btn-danger");
+                // button.setAttribute("id", 'delete');
+
+                // var span = document.createElement("span");
+                // span.setAttribute("aria-hidden", "true");
+                // span.setAttribute("class", "glyphicon glyphicon-trash");
+
+                // button.appendChild(span);
+                // button.innerHTML = 'Delete';
+
+                // this.parentElement.appendChild(button);
+                // this.parentElement.text = crossed;
                 this.parentElement.style.opacity = "0";
-                alert(this.value);
                 var index = taskList.indexOf(this.value);
-                alert(index);
                 if (index > -1) {
                   taskList.splice(index, 1);
                 }
@@ -36,6 +50,11 @@
             }
         });
     });
+
+    // function delete_task() {
+    //
+    // }
+
     function create_task(input_task) {
 
         if(input_task=="This is a task"){
@@ -47,9 +66,12 @@
         var input = document.createElement("input");
         var br = document.createElement("br");
 
+        label.setAttribute('class', 'custom-control-label');
+
         input.setAttribute('type', "checkbox");
         input.setAttribute('name', "task");
         input.setAttribute('value', task);
+        input.setAttribute('class', 'custom-control-input');
 
         label.appendChild(input);
         label.innerHTML += task;
@@ -87,6 +109,6 @@ Task List
     <input type="submit" value="Submit" onclick = "new_task()" id='text_submit'/>
     <br>
     <br>
-    <div id ='task_div'></div>
+    <div class="custom-control custom-checkbox" id ='task_div'></div>
 
 {% endblock %}

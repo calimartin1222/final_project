@@ -6,8 +6,15 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def account(request):
+    user = request.user
     #renders index.html in the accounts folder in the templates folder
-    return render(request, "account/index.html")
+    args = {
+        'username': user.username,
+        'first_name': user.first_name,
+        'last_name': user.last_name,
+        'email': user.email,
+    }
+    return render(request, "account/index.html", args)
 
 def register(request):
     #checks the way the user got to the page
@@ -35,16 +42,6 @@ def register(request):
         return render(request, 'account/register.html', args)
 
 @login_required
-def view_profile(request):
-    #creates a dictionary to be passed with user information
-    args = {
-        'user' : request.user
-    }
-    #renders profile.html in the accounts folder in the templates
-    #folder, and passes the dictionary args as an argument
-    return render(request, 'account/profile.html', args)
-
-@login_required
 def edit_profile(request):
     #checks the way the user got to the page
     #if it was a POST method, execute the following code
@@ -58,7 +55,7 @@ def edit_profile(request):
             form.save()
             #redirects the user to their profile page to see the changes
             #they made and double check
-            return redirect('/account/profile/')
+            return redirect('/account/')
     else:
         #creates a new, blank edit profile form for the user ot fill out
         form = edit_profile_form(instance=request.user)

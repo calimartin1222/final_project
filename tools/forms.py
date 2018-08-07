@@ -1,10 +1,10 @@
 from django import forms
 
 class per_day_form(forms.Form):
-    amount = forms.IntegerField()
+    amount = forms.IntegerField(max_value=200, min_value=0)
     due_date_month = forms.ChoiceField(choices=[(x, x) for x in range(1, 13)], label='Due Date')
-    due_date_day = forms.ChoiceField(choices=[(x, x) for x in range(1, 32)], label='/', label_suffix=' ')
-    due_date_year = forms.ChoiceField(choices=[(x, x) for x in range(2018, 2051)], label='/', label_suffix=' ')
+    due_date_day = forms.ChoiceField(choices=[(x, x) for x in range(1, 32)], label='/   ', label_suffix="")
+    due_date_year = forms.ChoiceField(choices=[(x, x) for x in range(2018, 2051)], label='/   ', label_suffix="")
 
     def clean(self):
         cleaned_data = super(per_day_form, self).clean()

@@ -5,14 +5,26 @@ Per Day
 {% endblock %}
 
 {% block body %}
-    <h2>Per Day</h2>
-    <p>Enter Date in MM/DD/YY format</p>
-    <form method="post">
-        <!--csrf token authentication-->
-        {% csrf_token %}
-        <!--gets form from login views.py-->
-        {{ form }}
-        <!--button used to submit form-->
-        <button type="submit">Calculate!</button>
-    </form>
+    <h2>Time Manager</h2>
+    <br>
+    {% if button_link == '/per_day' %}
+    {{ result }}
+    <br>
+    <a href="{{ button_link }}">{{ button }}</a>
+    {% else %}
+        <br>
+        <p>Amount is how many things (ex. pages to read, math problems) you have to do before the due date</p>
+        <form method="post">
+            <!--csrf token authentication-->
+            {% csrf_token %}
+            <!--gets form from login views.py-->
+            Amount: {{ form.amount }}
+            <br><br>
+            Due Date: {{ form.due_date_month }} / {{ form.due_date_day }} / {{ form.due_date_year }}
+            <br><br>
+            <!--button used to submit form-->
+            <button type="{{ button_type }}">{{ button }}</button>
+        </form>
+    {% endif %}
+
 {% endblock %}

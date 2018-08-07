@@ -5,5 +5,21 @@ Account
 {% endblock %}
 
 {% block body %}
-<h2>Account Home</h2>
+<h2>Hello, {{ first_name }}</h2>
+<br>
+<p class="text-primary">Username: </p>
+<p class="text-muted">{{ username }}</p>
+<br>
+<p class="text-primary">First Name: </p>
+<p class="text-muted">{{ first_name }}</p>
+<br>
+<p class="text-primary">Last Name: </p>
+<p class="text-muted">{{ last_name }}</p>
+<br>
+<p class="text-primary">Email: </p>
+<p class="text-muted">{{ email }}</p>
+<br>
+<form action='account/edit'>
+    <input type="submit" value="Edit Profile" />
+</form>
 {% endblock %}
