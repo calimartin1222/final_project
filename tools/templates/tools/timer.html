@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Timer
+{% endblock %}
+
+{% block body %}
+<!--sets up divs specific to different timers triggered by buttons-->
+<div id = 'choose' style='display: inline;'>
+    <button id = 'study'>Study!</button>
+    <button id = 'short_break'>Short Break</button>
+    <button id = 'long_break'>Long Break</button>
+</div>
+<div id = 'study_timer' style='display: none;'>
+    <h1 id = 'study_time'></h1>
+    <button id = 'study_start'>Start</button>
+    <button id = 'study_stop'>Stop</button>
+    <button id = 'study_reset'>Reset</button>
+</div>
+<div id = 'short_break_timer' style='display: none;'>
+    <h1 id = 'short_break_time'></h1>
+    <button id = 'short_break_start'>Start</button>
+    <button id = 'short_break_stop'>Stop</button>
+    <button id = 'short_break_reset'>Reset</button>
+</div>
+<div id = 'long_break_timer' style='display: none;'>
+    <h1 id = 'long_break_time'></h1>
+    <button id = 'long_break_start'>Start</button>
+    <button id = 'long_break_stop'>Stop</button>
+    <button id = 'long_break_reset'>Reset</button>
+</div>
+
+<script>
+
+document.addEventListener('DOMContentLoaded', () => {
+    //clears the div
+    clear();
+    //has the 'study' timer shown by default
+    document.querySelector("#study_timer").style.display = 'block';
+    //shows how long the user has before starting the timer
+    document.querySelector("#study_time").innerHTML = "25:00";
+
+    //when the 'study' button is pressed
+    document.getElementById("study").onclick = () => {
+        //clears the div
+        clear();
+        //has the 'study' timer shown
+        document.querySelector("#study_timer").style.display = 'block';
+        //shows how long the user has before starting the timer
+        document.querySelector("#study_time").innerHTML = "25:00";
+    };
+    //when the 'short break' button is pressed
+    document.getElementById("short_break").onclick = () => {
+        //clears the div
+        clear();
+        //has the 'short break' timer shown
+        document.querySelector("#short_break_timer").style.display = 'block';
+        //shows how long the user has before starting the timer
+        document.querySelector("#short_break_time").innerHTML = "05:00";
+    };
+    //when the 'long break' button is pressed
+    document.getElementById("long_break").onclick = () => {
+        //clears the div
+        clear();
+        //has the 'long break' timer shown
+        document.querySelector("#long_break_timer").style.display = 'block';
+        //shows how long the user has before starting the timer
+        document.querySelector("#long_break_time").innerHTML = "10:00";
+    };
+    //when the start button for the long break timer is pressed
+    document.getElementById("long_break_start").onclick = () => {
+        //run the 'Timer' function with parameter 600 seconds
+        Timer(600);
+    };
+    //when the start button for the short break timer is pressed
+    document.getElementById("short_break_start").onclick = () => {
+        //run the 'Timer' function with parameter 300 seconds
+        Timer(300);
+    };
+    //when the start button for the study timer is pressed
+    document.getElementById("study_start").onclick = () => {
+        //run the 'Timer' function with parameter 1500 seconds
+        Timer(1500);
+    };
+});
+//function that clears the page, but doesn't delete set up divs
+function clear(){
+    document.querySelector("#study_timer").style.display = 'none';
+    document.querySelector("#short_break_timer").style.display = 'none';
+    document.querySelector("#long_break_timer").style.display = 'none';
+}
+
+function Timer(duration) {
+    // sets variable i to the passed parameter duration
+    var i = duration;
+    //sets variable timer to setInterval function
+    var timer = setInterval(function() {
+        //if the long break stop button is pressed
+        document.getElementById("long_break_stop").onclick = () => {
+            //clear/stop the timer
+            clearInterval(timer);
+            //stop the function
+            return;
+        };
+        //if the short break stop button is pressed
+        document.getElementById("short_break_stop").onclick = () => {
+            //clear/stop the timer
+            clearInterval(timer);
+            //stop the function
+            return;
+        };
+        //if the study stop button is pressed
+        document.getElementById("study_stop").onclick = () => {
+            //clear/stop the timer
+            clearInterval(timer);
+            //stop the function
+            return;
+        };
+        //sets min(minute) to the duration divided by 60
+        //need to do this because the duration is given in seconds
+        var min = parseInt(i / 60, 10);
+        //if min is less than 10 adds a zero in front(i.e. 9 becomes 09)
+        if(min < 10){
+            min = "0"+ min;
+        }
+        //sets sec(seconds) to the remainder of duration divided by 60
+        //need to do this because the duration is given in seconds
+        var sec = parseInt(i % 60, 10);
+        //if sec is less than 10 adds a zero in front(i.e. 9 becomes 09)
+        if(sec < 10){
+            sec = "0"+ sec;
+        }
+        //makes the display text equal to the time left
+        document.querySelector("#long_break_time").innerHTML = min + ":" + sec;
+        document.querySelector("#short_break_time").innerHTML = min + ":" + sec;
+        document.querySelector("#study_time").innerHTML = min + ":" + sec;
+        //decrease i by 1
+        i--;
+    //per second (1000 milliseconds)
+    }, 1000);
+}
+
+</script>
+{% endblock %}

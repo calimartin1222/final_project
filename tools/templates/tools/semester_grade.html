@@ -3,23 +3,19 @@
 {% block javascript %}
     <script type="text/javascript">
     function calculate_total() {
-
+        //sets variables to the select inputs, easier to get selected value below
+        var e = document.getElementById('exam');
         var Q1 = document.getElementById('first_quarter');
         var Q2 = document.getElementById('second_quarter');
-        var e = document.getElementById('exam');
-
-        alert(Q1);
-
-        var quarter1 = Q1[Q1.selectedIndex].value();
-        var quarter2 = Q2[Q2.selectedIndex].value();
-        var exam = e[e.selectedIndex].value();
-
+        //gets selected values of all three dropdowns and parses them as numbers
+        var quarter1 = Number(Q1.options[Q1.selectedIndex].value);
+        var quarter2 = Number(Q2.options[Q2.selectedIndex].value);
+        var exam = Number(e.options[e.selectedIndex].value);
+        //adds 3 areas points
         var total = quarter1 + quarter2 + exam;
-
-        alert(total);
-
+        //grade points referenced from https://www.bee-man.us/school/broward_grades.php
+        //gets total and assesses what grade is associated with the total, and prints as letter on page
         if(total >= 28){
-
             document.getElementById('grade').innerHTML = "A";
         }
         else if(total >= 24.5){
@@ -44,9 +40,6 @@
             document.getElementById('grade').innerHTML = "F";
         }
     }
-    document.addEventListener('DOMContentLoaded', () => {
-        calculate_total();
-    });
     </script>
 {% endblock %}
 
@@ -55,10 +48,12 @@ Semester Grade
 {% endblock %}
 
 {% block body %}
-    <h2>Rotator or A/B Block<br>
-    Semester Grades<br>
+    <h2>Semester Grades<br>
     Broward County Schools</h2>
+    <!--sets up three different dropdown inputs that have options with values equal
+    to associated grade points-->
     <p>First Quarter</p>
+    <!--grade points referenced from https://www.bee-man.us/school/broward_grades.php-->
     <select id = 'first_quarter' onchange="calculate_total()">
     	<option value = "12" selected>A</option>
     	<option value = "9.3">B+</option>
@@ -92,5 +87,6 @@ Semester Grade
     	<option value = "0">F</option>
     </select>
     <p>Semester Grade</p>
+    <!--displays final semester grade; default as A-->
     <h1 id='grade'>A</h1>
 {% endblock %}

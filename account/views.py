@@ -24,7 +24,7 @@ def register(request):
             return redirect('/account/login/')
     #if the request was not a POST method (GET), execute the following code
     else:
-        #creates a new, blank registration form for the user ot fill out
+        #creates a new, blank registration form for the user to fill out
         form = registration_form()
         #creates a dictionary to be passed with the form information
         args = {
