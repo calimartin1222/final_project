@@ -1,0 +1,375 @@
+{% extends 'base.html' %}
+
+{% block body_no_container %}
+
+<!--basic calendar code referenced from https://codepen.io/rachelandrew/pen/PNwaZe-->
+
+
+<div class="modal" id='modal'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add Note</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='modal-close'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-body"></p>
+        <input type="text" id="text_input" style='width:100;' placeholder="Enter a Note"/>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='text_input_button'>Add Note</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id='modal-remove'>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Remove this note?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='modal-close'>
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="modal-body">Remove selected Note?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id='remove_note_button'>Remove Note</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_remove_button">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<table id="calendar">
+  <caption>August 2018</caption>
+  <tr class="weekdays">
+    <th scope="col">Sunday</th>
+    <th scope="col">Monday</th>
+    <th scope="col">Tuesday</th>
+    <th scope="col">Wednesday</th>
+    <th scope="col">Thursday</th>
+    <th scope="col">Friday</th>
+    <th scope="col">Saturday</th>
+  </tr>
+
+  <tr class="days">
+    <td class="day other-month" id='other_29'>
+      <div class="date">29</div>
+    </td>
+    <td class="day other-month" id='other_30'>
+      <div class="date">30</div>
+    </td>
+    <td class="day other-month" id='other_31'>
+      <div class="date">31</div>
+    </td>
+    <td class="day" onclick='note(this)' id='1'>
+      <div class="date">1</div>
+    </td>
+    <td class="day" onclick='note(this)' id='2'>
+      <div class="date">2</div>
+    </td>
+    <td class="day" onclick='note(this)' id='3'>
+      <div class="date">3</div>
+    </td>
+    <td class="day" onclick='note(this)' id='4'>
+      <div class="date">4</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="day" onclick='note(this)' id='5'>
+      <div class="date">5</div>
+    </td>
+    <td class="day"  onclick='note(this)' id='6'>
+      <div class="date">6</div>
+    </td>
+    <td class="day" onclick='note(this)' id='7'>
+      <div class="date">7</div>
+    </td>
+    <td class="day" onclick='note(this)' id='8'>
+      <div class="date">8</div>
+    </td>
+    <td class="day" onclick='note(this)' id='9'>
+      <div class="date">9</div>
+    </td>
+    <td class="day" onclick='note(this)' id='10'>
+      <div class="date">10</div>
+    </td>
+    <td class="day" onclick='note(this)' id='11'>
+      <div class="date">11</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="day" onclick='note(this)' id='12'>
+      <div class="date">12</div>
+    </td>
+    <td class="day" onclick='note(this)' id='13'>
+      <div class="date">13</div>
+    </td>
+    <td class="day" onclick='note(this)' id='14'>
+      <div class="date">14</div>
+    </td>
+    <td class="day" onclick='note(this)' id='15'>
+      <div class="date">15</div>
+    </td>
+    <td class="day" onclick='note(this)' id='16'>
+      <div class="date">16</div>
+    </td>
+    <td class="day" onclick='note(this)' id='17'>
+      <div class="date">17</div>
+    </td>
+    <td class="day" onclick='note(this)' id='18'>
+      <div class="date">18</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="day" onclick='note(this)' id='19'>
+      <div class="date">19</div>
+    </td>
+    <td class="day" onclick='note(this)' id='20'>
+      <div class="date">20</div>
+    </td>
+    <td class="day" onclick='note(this)' id='21'>
+      <div class="date">21</div>
+    </td>
+    <td class="day" onclick='note(this)' id='22'>
+      <div class="date">22</div>
+    </td>
+    <td class="day" onclick='note(this)' id='23'>
+      <div class="date">23</div>
+    </td>
+    <td class="day" onclick='note(this)' id='24'>
+      <div class="date">24</div>
+    </td>
+    <td class="day" onclick='note(this)' id='25'>
+      <div class="date">25</div>
+    </td>
+  </tr>
+  <tr>
+    <td class="day" onclick='note(this)' id='26'>
+      <div class="date">26</div>
+    </td>
+    <td class="day" onclick='note(this)' id='27'>
+      <div class="date">27</div>
+    </td>
+    <td class="day" onclick='note(this)' id='28'>
+      <div class="date">28</div>
+    </td>
+    <td class="day" onclick='note(this)' id='29'>
+      <div class="date">29</div>
+    </td>
+    <td class="day" onclick='note(this)' id='30'>
+      <div class="date">30</div>
+    </td>
+    <td class="day" onclick='note(this)' id='31'>
+      <div class="date">31</div>
+    </td>
+    <td class="day other-month" id='other_1'>
+      <div class="date">1</div>
+      <!-- Next Month -->
+    </td>
+  </tr>
+</table>
+
+<style>
+
+
+/* declare a 7 column grid on the table */
+#calendar {
+	width: 100%;
+	display: grid;
+}
+
+#calendar tr, #calendar tbody {
+  grid-column: 1 / -1;
+  display: grid;
+ grid-template-columns: repeat(7, 1fr);
+    width: 100%;
+}
+
+caption {
+	text-align: center;
+  grid-column: 1 / -1;
+  font-size: 130%;
+  font-weight: bold;
+  padding: 10px 0;
+}
+
+#calendar a {
+	color: #C8DDF4;
+	text-decoration: none;
+}
+
+#calendar td, #calendar th {
+	padding: 5px;
+	border: 0.5px solid #C8DDF4;
+	background:#3D5570;
+}
+
+#calendar .weekdays {
+	background: #3D5570;
+}
+
+
+#calendar .weekdays th {
+	text-align: center;
+	line-height: 20px;
+	border: none !important;
+	padding: 10px 6px;
+	color: #C8DDF4;
+	font-size: 16px;
+}
+
+#calendar td {
+	min-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+#calendar .days li:hover {
+	background: #d3d3d3;
+}
+
+#calendar .date {
+	text-align: center;
+	margin-bottom: 5px;
+	padding: 4px;
+	color: #C8DDF4;
+  flex: 0 0 auto;
+  align-self: flex-end;
+}
+
+#calendar .event {
+  flex: 0 0 auto;
+	font-size: 13px;
+	padding: 5px;
+	margin-bottom: 5px;
+	line-height: 14px;
+	background: #7899D4;
+	border: 1px solid #7899D4;
+	color: #C8DDF4;
+	text-decoration: none;
+}
+
+#calendar .event-desc {
+	color: #C8DDF4;
+	margin: 3px 0 7px 0;
+	text-decoration: none;
+}
+
+#calendar .other-month {
+	background: #3D4942;
+}
+
+/* ============================
+				Mobile Responsiveness
+   ============================*/
+
+
+@media(max-width: 768px) {
+
+	#calendar .weekdays, #calendar .other-month {
+		display: none;
+	}
+
+	#calendar li {
+		height: auto !important;
+		border: 1px solid #ededed;
+		width: 100%;
+		padding: 10px;
+		margin-bottom: -1px;
+	}
+
+  #calendar, #calendar tr, #calendar tbody {
+    grid-template-columns: 1fr;
+  }
+
+  #calendar  tr {
+    grid-column: 1 / 2;
+  }
+
+	#calendar .date {
+		align-self: flex-start;
+	}
+}
+</style>
+
+<script>
+
+    var list = ["event"];
+
+    if (!localStorage.getItem('eventList')){
+        localStorage.setItem('eventList', JSON.stringify(list));
+    }
+
+    var eventList = JSON.parse(localStorage.getItem('eventList'));
+
+document.addEventListener('DOMContentLoaded', () => {
+    if(eventList.length > 1){
+        for(var i = 1; i < eventList.length; i=i+2){
+            display_note(eventList[i], eventList[i+1]);
+        }
+    }
+});
+function note(element) {
+
+    var area = element;
+
+    document.getElementById('modal').style.display='block';
+
+    document.getElementById('text_input_button').onclick = function() {
+
+        var note = document.getElementById('text_input').value;
+
+        var div = document.createElement('div');
+
+        div.setAttribute('class', 'event');
+
+        var div2 = document.createElement('div');
+
+        div2.setAttribute('class', 'event-desc');
+
+        div2.innerHTML+=note;
+
+        div.append(div2);
+
+        area.append(div);
+
+        eventList.push(area.id);
+        eventList.push(note);
+        localStorage.setItem('eventList', JSON.stringify(eventList));
+
+        document.getElementById('modal').style.display='none';
+    };
+    document.getElementById('modal-close').onclick = () => {
+        document.getElementById('modal').style.display='none';
+    };
+}
+function display_note(id, note) {
+
+    var area = document.getElementById(id);
+
+    var div = document.createElement('div');
+
+    div.setAttribute('class', 'event');
+
+    var div2 = document.createElement('div');
+
+    div2.setAttribute('class', 'event-desc');
+
+    div2.innerHTML+=note;
+
+    div.append(div2);
+
+    area.append(div);
+
+}
+
+</script>
+{% endblock %}

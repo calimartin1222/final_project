@@ -9,4 +9,5 @@ urlpatterns = [
     path('semester_grade/', views.semester_grade, name='semester_grade'),
     path('tasklist/', views.tasklist, name='tasklist'),
     path('timer/', views.timer, name='timer'),
+    path('calendar/', views.calendar, name='calendar'),
 ]

@@ -96,3 +96,7 @@ def tasklist(request):
 def timer(request):
     #renders the timer.html file
     return render(request, 'tools/timer.html')
+
+def calendar(request):
+    #renders the timer.html file
+    return render(request, 'tools/calendar.html')
