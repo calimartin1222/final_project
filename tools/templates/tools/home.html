@@ -6,6 +6,7 @@ Home
 
 {% block body %}
     <br>
+    <!--basic homepage using 2 grid layout referenced from https://getbootstrap.com/docs/4.0/layout/grid/-->
     <div class="col-lg-8 col-md-7 col-sm-6">
         <h1>Welcome to A Plus</h1>
         <p class="lead text-primary">A collection of tools to beat the system.</p>
@@ -13,15 +14,20 @@ Home
     <br>
     <br>
     <div class="row">
+        <!--display stock photo-->
         <div class="col-5">
-            <img src="https://images.pexels.com/photos/8769/pen-writing-notes-studying.jpg?auto=compress&cs=tinysrgb&h=650&w=940" style="width:100%;"/>
+            <img
+            src="https://images.pexels.com/photos/8769/pen-writing-notes-studying.jpg?auto=compress&cs=tinysrgb&h=650&w=940"
+            style="width:100%;"/>
         </div>
         <div class="col-7">
+            <!--display quote -->
             <blockquote class="blockquote">
                 <p class="mb-0">You can never understand everything.<br>
                 But, you should push yourself to understand the system.</p>
                 <footer class="blockquote-footer">Ryan Dahl, <cite title="Source Title">Creator of Node.js</cite></footer>
             </blockquote>
+                <!--description of website-->
                 <p class='text-primary'>This is a website that combines many already existing and a couple new
                 studying tools into one website. Most of these tools already exist in one capacity or another on
                 other separate websites. My goal with this website is to have all of these features in one

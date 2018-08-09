@@ -5,21 +5,27 @@ Account
 {% endblock %}
 
 {% block body %}
+<!--gets first name from user from views.py-->
 <h2>Hello, {{ first_name }}</h2>
 <br>
 <p class="text-primary">Username: </p>
+<!--gets first name from user from views.py-->
 <p class="text-muted">{{ username }}</p>
 <br>
 <p class="text-primary">First Name: </p>
+<!--gets first name from user from views.py-->
 <p class="text-muted">{{ first_name }}</p>
 <br>
 <p class="text-primary">Last Name: </p>
+<!--gets last name from user from views.py-->
 <p class="text-muted">{{ last_name }}</p>
 <br>
 <p class="text-primary">Email: </p>
+<!--gets email from user from views.py-->
 <p class="text-muted">{{ email }}</p>
 <br>
 <form action='account/edit'>
-    <input type="submit" value="Edit Profile" />
+    <!--allows user to edit their profile-->
+    <input type="submit" value="Edit Profile"/>
 </form>
 {% endblock %}

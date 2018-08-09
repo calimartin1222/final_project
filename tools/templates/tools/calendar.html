@@ -2,51 +2,32 @@
 
 {% block body_no_container %}
 
-<!--basic calendar code referenced from https://codepen.io/rachelandrew/pen/PNwaZe-->
-
-
+<!--modal code referenced from https://getbootstrap.com/docs/4.0/components/modal/-->
 <div class="modal" id='modal'>
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Add Note</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='modal-close'>
+        <button type="button" class="close" data-dismiss="modal"
+        aria-label="Close" id='modal-close'>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <p id="modal-body"></p>
-        <input type="text" id="text_input" style='width:100;' placeholder="Enter a Note"/>
+        <input type="text" id="text_input" style='width:100;'
+        placeholder="Enter a Note"/>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id='text_input_button'>Add Note</button>
+        <button type="button" class="btn btn-primary"
+        id='text_input_button'>Add Note</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-
-<div class="modal" id='modal-remove'>
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Remove this note?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id='modal-close'>
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p id="modal-body">Remove selected Note?</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" id='remove_note_button'>Remove Note</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close_remove_button">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
+<!--basic calendar code and css referenced from
+https://codepen.io/rachelandrew/pen/PNwaZe-->
 <table id="calendar">
   <caption>August 2018</caption>
   <tr class="weekdays">
@@ -58,7 +39,6 @@
     <th scope="col">Friday</th>
     <th scope="col">Saturday</th>
   </tr>
-
   <tr class="days">
     <td class="day other-month" id='other_29'>
       <div class="date">29</div>
@@ -172,15 +152,13 @@
     </td>
     <td class="day other-month" id='other_1'>
       <div class="date">1</div>
-      <!-- Next Month -->
     </td>
   </tr>
 </table>
 
 <style>
 
-
-/* declare a 7 column grid on the table */
+/* css code referenced from same source as above */
 #calendar {
 	width: 100%;
 	display: grid;
@@ -301,75 +279,78 @@ caption {
 </style>
 
 <script>
-
+    // declares a list called list and stores a default value to avoid errors
     var list = ["event"];
-
+    // checks local storage for 'eventList' variable and populates it if empty
     if (!localStorage.getItem('eventList')){
         localStorage.setItem('eventList', JSON.stringify(list));
     }
-
+    //sets global variable 'eventList' to local storage variable
     var eventList = JSON.parse(localStorage.getItem('eventList'));
-
-document.addEventListener('DOMContentLoaded', () => {
-    if(eventList.length > 1){
-        for(var i = 1; i < eventList.length; i=i+2){
-            display_note(eventList[i], eventList[i+1]);
-        }
-    }
-});
-function note(element) {
-
-    var area = element;
-
-    document.getElementById('modal').style.display='block';
-
-    document.getElementById('text_input_button').onclick = function() {
-
-        var note = document.getElementById('text_input').value;
-
-        var div = document.createElement('div');
-
-        div.setAttribute('class', 'event');
-
-        var div2 = document.createElement('div');
-
-        div2.setAttribute('class', 'event-desc');
-
-        div2.innerHTML+=note;
-
-        div.append(div2);
-
-        area.append(div);
-
-        eventList.push(area.id);
-        eventList.push(note);
-        localStorage.setItem('eventList', JSON.stringify(eventList));
-
+  //when the page loads
+  document.addEventListener('DOMContentLoaded', () => {
+    //gets length of locally stored list, and if it is longer than the default 1
+      if(eventList.length > 1){
+          for(var i = 1; i < eventList.length; i=i+2){
+              //run display_note function and pass in parameters needed
+              display_note(eventList[i], eventList[i+1]);
+          }
+      }
+  });
+  function note(element) {
+      //declares variable area equal to passed in argument
+      var area = element;
+      //gets element with id 'modal' and makes it visible
+      document.getElementById('modal').style.display='block';
+      //gets element with id 'text_input_button' and declares its onclick function
+      document.getElementById('text_input_button').onclick = function() {
+          //declares variable called note and sets it equal to the text input value
+          var note = document.getElementById('text_input').value;
+          //creates div element named div
+          var div = document.createElement('div');
+          //sets class of div to 'event'
+          div.setAttribute('class', 'event');
+          //creates div element named div2
+          var div2 = document.createElement('div');
+          //sets class of div to 'event-desc'
+          div2.setAttribute('class', 'event-desc');
+          //adds content of note to div2
+          div2.innerHTML+=note;
+          //adds div2 of note to div
+          div.append(div2);
+          //adds content of div to area
+          area.append(div);
+          //adds id of note to eventList
+          eventList.push(area.id);
+          //adds note to eventList
+          eventList.push(note);
+          //updates local storage
+          localStorage.setItem('eventList', JSON.stringify(eventList));
+          //makes modal invisible
+          document.getElementById('modal').style.display='none';
+      };
+      document.getElementById('modal-close').onclick = () => {
+        //on click of button with id 'modal-close', makes modal invisible
         document.getElementById('modal').style.display='none';
-    };
-    document.getElementById('modal-close').onclick = () => {
-        document.getElementById('modal').style.display='none';
-    };
-}
-function display_note(id, note) {
-
-    var area = document.getElementById(id);
-
-    var div = document.createElement('div');
-
-    div.setAttribute('class', 'event');
-
-    var div2 = document.createElement('div');
-
-    div2.setAttribute('class', 'event-desc');
-
-    div2.innerHTML+=note;
-
-    div.append(div2);
-
-    area.append(div);
-
-}
-
+      };
+  }
+  function display_note(id, note) {
+      //declares a variable named area and sets it equal to passed in id
+      var area = document.getElementById(id);
+      //creates div element named div
+      var div = document.createElement('div');
+      //sets div element class to 'event'
+      div.setAttribute('class', 'event');
+      //creates div element named div2
+      var div2 = document.createElement('div');
+      //creates div element named div2
+      div2.setAttribute('class', 'event-desc');
+      //adds note content to div2
+      div2.innerHTML+=note;
+      //adds div2 content to div
+      div.append(div2);
+      //adds div to area
+      area.append(div);
+  }
 </script>
 {% endblock %}

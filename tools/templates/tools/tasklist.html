@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block javascript %}
+    <!--close icon button code referenced from https://codepen.io/shidhincr/pen/ICLBD-->
     <style>
 
     .close-icon {
@@ -23,82 +24,91 @@
     	font-weight: normal;
     	font-size: 14px;
     	margin: 0 auto;
-    	/*box-shadow: 0 0 2px #E50F0F;*/
     	cursor: pointer;
     }
 
     </style>
 
     <script type="text/javascript">
-
+    // declares a list called list and stores a default value to avoid errors
     var list = ["This is a task"];
-
+    // checks local storage for 'taskList' variable and populates it if empty
     if (!localStorage.getItem('taskList')){
         localStorage.setItem('taskList', JSON.stringify(list));
     }
-
+    //sets global variable 'taskList' to local storage variable
     var taskList = JSON.parse(localStorage.getItem('taskList'));
-
+    // declares create_task function
     function create_task(input_task) {
+        // if the only task in the local storage list is the default one, exit
         if(input_task=="This is a task"){
             return;
         }
-
+        //declares task to equal passed in parameter
         var task = input_task;
+        //creates label element named label
         var label = document.createElement("label");
+        //creates input element named input
         var input = document.createElement("input");
+        //creates br element named br
         var br = document.createElement("br");
-
-        // label.setAttribute('class', 'custom-control-label');
-
+        //set multiple attributes to input element
         input.setAttribute('type', "checkbox");
         input.setAttribute('onclick', 'strike_task(this)');
         input.setAttribute('name', "task");
         input.setAttribute('value', task);
-        // input.setAttribute('class', 'custom-control-input');
-
+        //add input to label element
         label.appendChild(input);
+        //add task to label element
         label.innerHTML += task;
-
+        //add label to div and br to div
         document.getElementById("task_div").appendChild(label);
         document.getElementById("task_div").appendChild(br);
     }
-
+    //declares function new_task
     function new_task() {
+        //declares variable task as text input value
         var task = document.getElementById("task_input").value;
+        // runs function create_task
         create_task(task);
+        // adds task to taskList
         taskList.push(task);
+        // updates local storage
         localStorage.setItem('taskList', JSON.stringify(taskList));
+        // empties out text input
         document.getElementById("task_input").value = '';
     }
-
+    //declares function strike_task
     function strike_task(element){
-
-
-        // <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
-        //<input type="checkbox" onclick="strike_task(this)" name="task" value="asaSASAS" class="custom-control-input" checked="">
-        element.setAttribute("checked", "");
-
+        //sets style attribute of passed in element
         element.parentElement.setAttribute('style', 'text-decoration: line-through;color:gray;');
-
+        //declares variable named button to a new button element and adds attributes
         var button = document.createElement('button');
         button.setAttribute('class', 'close-icon');
         button.setAttribute('type', 'reset');
         button.setAttribute('onclick', 'remove_task(this.parentElement)');
-
+        //add button to passed in element
         element.parentElement.append(button);
     }
-
+    //declares function remove_task
     function remove_task(element) {
+        //set element opacity to 0
         element.style.opacity = "0";
+        //set element display to none
         element.style.display = 'none';
+        //sets variable index equal to index of task in local storage list
         var index = taskList.indexOf(element.innerText);
+        //sees if it exists in local storage
         if (index > -1) {
-          taskList.splice(index, 1);
+            //removes specified element
+            taskList.splice(index, 1);
         }
+        //updates local storage
         localStorage.setItem('taskList', JSON.stringify(taskList));
     }
+    //declares function text_change
     function text_change() {
+        //if value text input is empty, disable submit button
         if(document.getElementById("task_input").value=="" || document.getElementById("task_input").value==" "){
                 document.getElementById("text_submit").disabled = true;
         }
@@ -106,21 +116,21 @@
             document.getElementById("text_submit").disabled = false;
         }
     }
-
+    //when the page loads
     document.addEventListener('DOMContentLoaded', () => {
-
+        //check if inout is empty, and if it isn't, don't disable button
         if(document.getElementById("task_input").value=="" || document.getElementById("task_input").value==" "){
             document.getElementById("text_submit").disabled = true;
         }
-
+        //resets task_div
         document.getElementById("task_div").innerHTML = '';
+        //creates and adds any locally stored tasks if length is greater than 1
         if(taskList.length > 1){
         for(var i = 1; i < taskList.length; i++){
             create_task(taskList[i]);
         }
     }
-
-    });
+});
 
 </script>
 {% endblock %}
@@ -132,10 +142,11 @@ Task List
 {% block body %}
     <h2>Task List<br></h2>
     <br>
+    <!--simple input for creating new tasks and submititng them-->
     <input type="text" id="task_input" placeholder = "Enter a Task" onkeyup="text_change()"></input>
     <input type="submit" value="Submit" onclick = "new_task()" id='text_submit'/>
     <br>
     <br>
+    <!--initializes empty div for tasks-->
     <div class="custom-control custom-checkbox" id ='task_div'></div>
-
 {% endblock %}

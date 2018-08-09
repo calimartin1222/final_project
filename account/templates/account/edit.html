@@ -12,7 +12,19 @@ Edit Profile
         <!--csrf token authentication-->
         {% csrf_token %}
         <!--gets form from edit_profile in views.py-->
-        {{ form.as_p }}
+        <p class="text-primary">Username: </p>
+        {{ form.username }}
+        <br>
+        <p class="text-primary">First Name: </p>
+        {{ form.first_name }}
+        <br>
+        <p class="text-primary">Last Name: </p>
+        {{ form.last_name }}
+        <br>
+        <p class="text-primary">Email: </p>
+        {{ form.email }}
+        <br>
+        <br>
         <!--button used to submit profile edit form-->
         <button type="submit">Save Changes</button>
     </form>

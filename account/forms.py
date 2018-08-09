@@ -45,4 +45,5 @@ class edit_profile_form(UserChangeForm):
             'first_name',
             'last_name',
             'email',
+            'password'
         )

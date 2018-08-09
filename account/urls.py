@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 from django.contrib.auth.views import login, logout
 
-#defines all 'account' urls so when the user visits /account/SOMETHING
+#defines all 'account' urls so when the user visits /account/SOMETHING,
+#it renders the designated html page
 urlpatterns = [
     path('', views.account),
     path('login/', login, {'template_name': 'account/login.html'}),

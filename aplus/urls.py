@@ -19,6 +19,7 @@ from django.conf.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #adds all 'tools' urls so when the user visits /SOMETHING, it renders
     path('', include('tools.urls')),
     #adds all 'account' urls so when the user visits /account/SOMETHING, it renders
     path('account/', include('account.urls')),
