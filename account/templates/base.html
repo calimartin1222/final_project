@@ -1,20 +1,35 @@
-<!--basic base.html, will change later to an open source template-->
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" href="https://bootswatch.com/4/cosmo/bootstrap.min.css" type="text/css" media='screen'/>
-        {% load static %}
+        <!--link to all javascript or css used on the whole web app-->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
+        integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
+        crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"
+        integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
+        crossorigin="anonymous"></script>
+        <link rel="stylesheet"
+        href="https://bootswatch.com/4/cosmo/bootstrap.min.css"
+        type="text/css" media='screen'/>
+        <!--additional javascript will be inserted here as needed-->
+        {% block javascript %}{% endblock %}
         <title>{% block title %}{% endblock %}</title>
     </head>
-    <body>
+        <!--checks if the user is logged in-->
         {% if user.is_authenticated %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="/">A Plus</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
-            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" id="expand">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarColor02">
+            {% load static %}
+            <a class="navbar-brand" href="/">
+                <img src="{% static 'aplus_logo.png' %}"  height='60px' width='60px'></img>
+            </a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup"
+            id='navbarResponsive'>
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/per_day">Time Manager</a>
@@ -29,10 +44,12 @@
                     <a class="nav-link" href="/timer">Study Timer</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/grade_recieved">Grade Calculator</a>
+                    <a class="nav-link" href="/grade_recieved">
+                        Grade Calculator</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/semester_grade">Semester Grade Calculator</a>
+                    <a class="nav-link" href="/semester_grade">
+                        Semester Grade Calculator</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/account">Account</a>
@@ -41,9 +58,6 @@
             <ul class="nav navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link" href="/account/logout">Logout</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact Us</a>
             </li>
           </ul>
             </div>

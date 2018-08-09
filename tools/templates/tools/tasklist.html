@@ -1,6 +1,34 @@
 {% extends 'base.html' %}
 
 {% block javascript %}
+    <style>
+
+    .close-icon {
+    	border:1px solid transparent;
+    	background-color: transparent;
+    	display: inline-block;
+    	vertical-align: middle;
+          outline: 0;
+          cursor: pointer;
+    }
+    .close-icon:after {
+    	content: "X";
+    	display: block;
+    	width: 20px;
+    	height: 20px;
+    	background-color:gray;
+    	border-radius: 50%;
+    	text-align: center;
+    	color: white;
+    	font-weight: normal;
+    	font-size: 14px;
+    	margin: 0 auto;
+    	/*box-shadow: 0 0 2px #E50F0F;*/
+    	cursor: pointer;
+    }
+
+    </style>
+
     <script type="text/javascript">
 
     var list = ["This is a task"];
@@ -11,52 +39,7 @@
 
     var taskList = JSON.parse(localStorage.getItem('taskList'));
 
-    document.addEventListener('DOMContentLoaded', () => {
-
-        if(document.getElementById("task_input").value=="" || document.getElementById("task_input").value==" "){
-            document.getElementById("text_submit").disabled = true;
-        }
-
-        document.getElementById("task_div").innerHTML = '';
-
-        for(var i = 0; i < taskList.length; i++){
-            create_task(taskList[i]);
-        }
-
-        document.getElementsByName('task').forEach(function(checkbox) {
-            checkbox.onclick = function() {
-                // var crossed = this.parentElement.innerHTML.strike();
-                // this.checked = true;
-                // var button = document.createElement("button");
-                // button.setAttribute("type", "button");
-                // button.setAttribute("class", "btn btn-danger");
-                // button.setAttribute("id", 'delete');
-
-                // var span = document.createElement("span");
-                // span.setAttribute("aria-hidden", "true");
-                // span.setAttribute("class", "glyphicon glyphicon-trash");
-
-                // button.appendChild(span);
-                // button.innerHTML = 'Delete';
-
-                // this.parentElement.appendChild(button);
-                // this.parentElement.text = crossed;
-                this.parentElement.style.opacity = "0";
-                var index = taskList.indexOf(this.value);
-                if (index > -1) {
-                  taskList.splice(index, 1);
-                }
-                localStorage.setItem('taskList', JSON.stringify(taskList));
-            }
-        });
-    });
-
-    // function delete_task() {
-    //
-    // }
-
     function create_task(input_task) {
-
         if(input_task=="This is a task"){
             return;
         }
@@ -66,12 +49,13 @@
         var input = document.createElement("input");
         var br = document.createElement("br");
 
-        label.setAttribute('class', 'custom-control-label');
+        // label.setAttribute('class', 'custom-control-label');
 
         input.setAttribute('type', "checkbox");
+        input.setAttribute('onclick', 'strike_task(this)');
         input.setAttribute('name', "task");
         input.setAttribute('value', task);
-        input.setAttribute('class', 'custom-control-input');
+        // input.setAttribute('class', 'custom-control-input');
 
         label.appendChild(input);
         label.innerHTML += task;
@@ -79,12 +63,40 @@
         document.getElementById("task_div").appendChild(label);
         document.getElementById("task_div").appendChild(br);
     }
+
     function new_task() {
         var task = document.getElementById("task_input").value;
         create_task(task);
         taskList.push(task);
         localStorage.setItem('taskList', JSON.stringify(taskList));
         document.getElementById("task_input").value = '';
+    }
+
+    function strike_task(element){
+
+
+        // <input type="checkbox" class="custom-control-input" id="customCheck1" checked="">
+        //<input type="checkbox" onclick="strike_task(this)" name="task" value="asaSASAS" class="custom-control-input" checked="">
+        element.setAttribute("checked", "");
+
+        element.parentElement.setAttribute('style', 'text-decoration: line-through;color:gray;');
+
+        var button = document.createElement('button');
+        button.setAttribute('class', 'close-icon');
+        button.setAttribute('type', 'reset');
+        button.setAttribute('onclick', 'remove_task(this.parentElement)');
+
+        element.parentElement.append(button);
+    }
+
+    function remove_task(element) {
+        element.style.opacity = "0";
+        element.style.display = 'none';
+        var index = taskList.indexOf(element.innerText);
+        if (index > -1) {
+          taskList.splice(index, 1);
+        }
+        localStorage.setItem('taskList', JSON.stringify(taskList));
     }
     function text_change() {
         if(document.getElementById("task_input").value=="" || document.getElementById("task_input").value==" "){
@@ -95,7 +107,22 @@
         }
     }
 
-    </script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        if(document.getElementById("task_input").value=="" || document.getElementById("task_input").value==" "){
+            document.getElementById("text_submit").disabled = true;
+        }
+
+        document.getElementById("task_div").innerHTML = '';
+        if(taskList.length > 1){
+        for(var i = 1; i < taskList.length; i++){
+            create_task(taskList[i]);
+        }
+    }
+
+    });
+
+</script>
 {% endblock %}
 
 {% block title %}
@@ -105,7 +132,7 @@ Task List
 {% block body %}
     <h2>Task List<br></h2>
     <br>
-    <input type="text" id="task_input" placeholder = "Enter a Task" onkeyup="text_change();"/>
+    <input type="text" id="task_input" placeholder = "Enter a Task" onkeyup="text_change()"></input>
     <input type="submit" value="Submit" onclick = "new_task()" id='text_submit'/>
     <br>
     <br>
